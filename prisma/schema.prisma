@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model floor {
+  id             Int      @id @default(autoincrement())
+  code           String
+  number         Int
+  total_slot_nbr Int
+  create_time    DateTime @default(now())
+  slot           slot[]
+}
+
+model vehicle_type {
+  id          Int       @id @default(autoincrement())
+  name        String
+  create_time DateTime  @default(now())
+  vehicle     vehicle[]
+  slot        slot[]
+}
+
+model vehicle {
+  id              Int          @id @default(autoincrement())
+  reg_number      Int
+  mark            String
+  create_time     DateTime     @default(now())
+  vehicle_type    vehicle_type @relation(fields: [vehicle_type_id], references: [id])
+  vehicle_type_id Int
+  ticked          ticked[]
+}
+
+model ticked {
+  id          Int      @id @default(autoincrement())
+  code        String
+  start_time  DateTime
+  end_time    DateTime
+  create_time DateTime @default(now())
+  vehicle     vehicle  @relation(fields: [vehicle_id], references: [id])
+  vehicle_id  Int
+  slot        slot     @relation(fields: [slot_id], references: [id])
+  slot_id     Int
+}
+
+model slot {
+  id              Int          @id @default(autoincrement())
+  number          Int
+  available       Int
+  create_time     DateTime     @default(now())
+  vehicle_type    vehicle_type @relation(fields: [vehicle_type_id], references: [id])
+  vehicle_type_id Int
+  floor           floor        @relation(fields: [floorID], references: [id])
+  floorID         Int
+  ticked          ticked[]
+}

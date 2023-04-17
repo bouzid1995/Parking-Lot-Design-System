@@ -1,0 +1,28 @@
+{
+  "name": "next-generation-parking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.12.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-errors": "^2.0.0",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22"
+  },
+  "devDependencies": {
+    "prisma": "^4.12.0"
+  },
+  "prisma": {
+    "shema": "db/shema.prisma",
+    "seed": "node db/seed.js"
+  }
+}
